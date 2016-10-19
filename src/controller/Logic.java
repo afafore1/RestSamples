@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -18,6 +20,8 @@ import org.json.JSONObject;
 
 @Path("/logic")
 public class Logic {
+	
+	private List<Integer> _myList = new ArrayList<>();
 
 	private String GetPairs(int length, int target) {
 		String result = "";
@@ -115,6 +119,28 @@ public class Logic {
 			isPalindrome = true;
 		}
 		jsonObject.put(String.valueOf(number), isPalindrome);
+		return Response.status(200).entity(jsonObject.toString()).build();
+	}
+	
+	@Path("/incrementArray/{value}")
+	@PUT
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response IncrementArray(@PathParam("value") int value) throws JSONException 
+	{
+		JSONObject jsonObject = new JSONObject();
+		_myList.add(value);
+		jsonObject.put("List", _myList);
+		return Response.status(200).entity(jsonObject.toString()).build();
+	}
+	
+	@Path("/createList/{value}")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response CreateList(@PathParam("value") int value) throws JSONException 
+	{
+		JSONObject jsonObject = new JSONObject();
+		_myList.add(value);
+		jsonObject.put("List", _myList);
 		return Response.status(200).entity(jsonObject.toString()).build();
 	}
 }
